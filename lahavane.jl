@@ -22,3 +22,27 @@ begin
 
   evluate(obs::U) where U<:Real = obs
 end
+
+# change the TimePoint type into
+# something more robust and concize
+# here's a proposal
+begin
+  const TimePoint = Union{<:Real,<:TimeType}
+end
+
+
+begin
+  function simulate(
+                    m::BlackScholes,
+                    Tuple{A,B},
+                    from::D,
+                    to::D,
+                    dt::Period;
+                    n::Int64=1,
+                    x0::R=1.0,
+                    nsteps::C=0,
+                    rn::Bool=false
+           ) where {A<:Real,B<:Real,C<:Integer,D<:Union{Date,AbstractDateTime}}
+    end
+                    
+end
