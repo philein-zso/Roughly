@@ -37,9 +37,16 @@ begin
                     from::T, to::T, dt::Period;
                     n::Integer=1, nsteps::Integer=0,
                     x0::R=1.0, rn::Bool=false,
-                    dcc::DayCounyConventions=ActAct()
+                    dcc::DayCountConventions=ActAct()
            ) where {A<:Real,B<:Real,T<:TimeType,R<:Real}
-    
+    t  = collect(StepRange(from, dt, to))
+    in(to, t) ? nothing : push!(t, to)
+    _t = vcat(0.0, diff(dcc, t))
+    _n = max(nsteps, ceil(Int64, /(size(_t,1),max(_t))))
+    wi = WienerProcess(n, sum(_t), nsteps=_n, dimension=1)
+    simulate!(wi)
+    β  = ifelse(rn, S(m.riskfreerate)(from), par[1]-0.5par[2]^2)
+    (t, x0 * exp.(.+(β * cumsum(_t), σ * wi.paths)))
   end
 
   function simulate(
