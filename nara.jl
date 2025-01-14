@@ -124,28 +124,29 @@ begin
                           m::CIR,
                           obs::Observables,
                           prices::Vector{R},
-                          times::Vector{TimePoint};
+                          times::Vector{T};
                           dcc::DayCountConventions=ActAct()
-           ) where R<:Real
+           ) where {R<:Real,T<:TimePoint}
     nothing
   end
   
   function StatsBase.fit!(
                           m::CIR,
                           obs::Observables,
-                          from::TimePoint,
-                          to::TimePoint;
+                          from::T,
+                          to::T;
                           dcc::DayCountConventions=ActAct()
-           )
+           ) where {T<:TimePoint}
     nothing
   end
   
   function StatsBase.fit!(
                           m::CIR,
                           obs::Observables,
-                          from::TimePoint;
+                          from::T;
                           dcc::DayCountConventions=ActAct()
-           )
+           ) where T<:TimePoint
+    nothing
   end
   
   function StatsBase.fit!(
