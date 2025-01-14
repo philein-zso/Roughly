@@ -43,8 +43,9 @@ begin
       fit(m::CIR, prices, times; <kwargs>)
       fit(m::CIR, obs, from::TimePoint, to::TimePoint; <kwargs>)
       fit(m::CIR, obs, from::TimePoint; <kwargs>)
-  
-  Return an `NTuple{2,Real}` representing the reqult of fitting
+      fit(m::CIR, obs; <kwargs>)
+
+  Return an `NTuple{2,Real}` representing the result of fitting
   the Black-Scholes model `m` to `prices` observed at `times`.
   
   # Arguments
@@ -54,7 +55,7 @@ begin
   - `obs::Observables`: the observable to get prices from.
   - `from::TimePoint`: use `obs`' prices from `from` to `to`.
   - `to::TimePoint`: use `obs` prices from `from` to `to`.
-  - `dcc::DayCountConventions=ActAct()`: day count convention.
+  - `dcc::DayCountConventions=ActAct()`: kwarg, day count convention.
   
   # Notes
   The current implementation does not restrict the `Observables`
@@ -94,14 +95,12 @@ begin
   end
 
   """
-      fit(m::CIR, prices, times; <kwargs>)
-      fit(m::CIR, obs, from::TimePoint, to::TimePoint; <kwargs>)
-      fit(m::CIR, obs, from::TimePoint; <kwargs>)
-      fit(m::CIR, obs; <kwargs>)
-      
-  
-  `fit` a CIR model to `prices` corresponding observed at `times` and store
-  the result into observables' parameters container (`obs.params`).
+      fit!(m::CIR, obs, prices, times; <kwargs>)
+      fit!(m::CIR, obs, from::TimePoint, to::TimePoint; <kwargs>)
+      fit!(m::CIR, obs, from::TimePoint; <kwargs>)
+      fit!(m::CIR, obs; <kwargs>)
+
+  `fit` `obs` in-place, then return the `NTuple{2,Real}` of parameters.
   
   # Arguments
   - `m::CIR`: a CIR model intance.
@@ -116,10 +115,10 @@ begin
   The current implementation does not restrict the `Observables`
   to any its (sub)types. Even if the CIR model is mostly intended
   for rates, the implementation does not restrict the `obs` argument.
-  
-  When `obs` is provided, the implementation requires model's
-  `required` parameters to be stored into `params` field. Use the
-  `setparams!` facility for that goal.
+
+  When `obs` is procided, the implementation requires model's
+  `required` parameters to be stored into `params` field. Use
+  the `setparams!` facility for that goal.
   """
   function StatsBase.fit!(
                           m::CIR,
