@@ -1,13 +1,13 @@
 #> bonds_pricers, under specific models
 
 #> refactoring of OU simulation
-#
-# Maybe should be defining the following facility
-#
-function op(ξ::R) where R<:Real
-  _f(x::A,y::B) where {A<:Real,B<:Real} = muladd(x,ξ,y)
-end
 
+# The following function can be defined in [utils.jl]
+begin
+  function Base.muladd(ξ::R) where R<:Real
+    _f(x::A,y::B) where {A<:Real,B<:Real} = muladd(x,ξ,y)
+  end
+end
 
 begin
   function simulate(ou::OrnsteinUhlenbeckProcess; x0::R=one(Real)) where R<:Real
