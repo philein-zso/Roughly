@@ -11,11 +11,13 @@ end
 
 begin
   function simulate(ou::OrnsteinUhlenbeckProcess; x0::R=one(Real)) where R<:Real
+    τ = vcat(0, diff(ou.times))
+    ω = exp.(-θ * τ)
     x = rand(Normal(0.0, 1.0), getfield(ou, :kinda))
-    x .= .*(ou.σ * sqrt.(./(1 .- exp.(-2θ * τ), 2θ)), x)
-    
+    x .= .*(ou.σ * sqrt.(/(1 .- ω .* ω, 2θ)), x)
+    accumulate!(muladd(ω), x, x, dims=1)
+    (ou.times, x)
   end
-
 end
 
 
