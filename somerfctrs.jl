@@ -15,7 +15,7 @@ begin
     ω = exp.(-θ * τ)
     x = rand(Normal(0.0, 1.0), getfield(ou, :kinda))
     x .= .*(ou.σ * sqrt.(/(1 .- ω .* ω, 2θ)), x)
-    accumulate!(muladd(ω), x, x, dims=1)
+    accumulate!(muladd(ω), x, x, dims=1, init=x0)
     (ou.times, x)
   end
 end
