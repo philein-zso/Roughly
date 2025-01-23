@@ -6,5 +6,7 @@
 # We need some conventions about the compouding frequency.
 # Valid frequencies are:
 #  - Day, Month, Week, Year
-# 
-#
+#  
+# TO BE Implemented:
+# - Exchnage Option
+# - Asset-Or-Nothing option.
