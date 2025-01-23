@@ -6,4 +6,5 @@
 # We need some conventions about the compouding frequency.
 # Valid frequencies are:
 #  - Day, Month, Week, Year
-#  We convert months into 
+# 
+#
